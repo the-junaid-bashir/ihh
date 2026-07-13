@@ -1,0 +1,136 @@
+import React from 'react';
+import { Zap, Rocket, CheckCircle2, Cpu, Globe, ArrowRight } from 'lucide-react';
+
+const AcceleratorHero = () => {
+  return (
+    <div className="relative min-h-screen bg-black text-white font-mono overflow-hidden">
+      {/* Background Subtle Grid Effect */}
+      <div className="absolute inset-0 opacity-20" 
+           style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', 
+                    backgroundSize: '40px 40px' }}></div>
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          
+          {/* Left Content: The Pitch */}
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 text-xs tracking-widest uppercase">
+              <Zap size={14} className="text-yellow-500 fill-yellow-500/20" />
+              Invite-Only Protocol
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight uppercase">
+              Micro <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/40">
+                Accelerator.
+              </span>
+            </h1>
+             <h5>Token holders will be eligible for early access and priority consideration when the micro-accelerator launches</h5>
+            <p className="max-w-md text-gray-400 leading-relaxed border-l-2 border-white/10 pl-6">
+              A 4-6 week high-intensity sprint for independent builders. We don't take equity or control. We provide the platform.you provide the code.
+            </p>
+
+            {/* Submission Rules Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+              {[
+                { label: "Stage", val: "Early Phase Only" },
+                { label: "Funding", val: "Zero VC/Seed Raised" },
+                { label: "License", val: "Strictly Open Source" },
+                { label: "Domain", val: "Web3" }
+              ].map((rule, i) => (
+                <div key={i} className="border border-white/5 bg-white/5 p-3">
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{rule.label}</p>
+                  <p className="text-sm font-bold uppercase">{rule.val}</p>
+                </div>
+              ))}
+            </div>
+            
+
+
+            <div className="flex flex-wrap gap-4 pt-4">
+                
+              <div className="group relative">
+                <div className="absolute -inset-0.5 bg-white opacity-20 blur group-hover:opacity-40 transition duration-1000"></div>
+                <button className="relative bg-white text-black px-8 py-4 font-bold transition-all uppercase text-sm tracking-widest cursor-not-allowed">
+                  Coming Soon
+                </button>
+              </div>
+              
+              <button className="border border-white/20 px-8 py-4 font-bold hover:bg-white/5 transition-all uppercase text-sm tracking-widest">
+                <a href='/accelerator'>Learn More</a>
+              </button>
+
+            </div>
+
+
+
+
+
+
+          </div>
+
+          {/* Right Content: The Protocol Terminal */}
+          <div className="relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-transparent blur opacity-30"></div>
+            <div className="relative bg-[#0A0A0A] border border-white/10 rounded-sm overflow-hidden shadow-2xl">
+              
+              {/* Terminal Header */}
+              <div className="bg-[#1A1A1A] px-4 py-3 border-b border-white/10 flex items-center justify-between">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                </div>
+                <span className="text-[10px] text-gray-500 tracking-[0.2em] uppercase flex items-center gap-2">
+                  <Cpu size={12} /> accelerator_v1.sys
+                </span>
+                  
+              </div>
+              
+              {/* Terminal Body */}
+              <div className="p-8 space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold uppercase tracking-tight">The Agreement</h3>
+                  <p className="text-xs text-zinc-500 uppercase leading-relaxed">
+                    No complex term sheets. No board seats.
+                  </p>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 p-6 space-y-4">
+                  <div className="flex items-start gap-4">
+                    <CheckCircle2 className="text-white mt-1" size={18} />
+                    <div>
+                      <p className="text-sm font-bold uppercase">COMING SOON</p>
+                     
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between bg-black p-4 border border-white/5">
+                    <span className="text-xs uppercase tracking-widest text-zinc-400">No cost</span>
+                
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h5 className="w-full bg-white text-black py-4 font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 uppercase text-xs tracking-widest">
+                    Invite Only <ArrowRight size={14} />
+                  </h5>
+                  <p className="text-[9px] text-center text-zinc-600 uppercase tracking-[0.2em]">
+                    Subject to codebase review & verification
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Floating Decorative Elements */}
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AcceleratorHero;
