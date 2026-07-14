@@ -22,12 +22,54 @@ import ImmutablePromptsHero from "../lib/promptshero";
 import IPMRegistryHero from "../lib/registry";
 import EternalFrontendHero from "../lib/defronts";
 import ImmutableAgentsHero from "../lib/immutableagentshero";
-import  PercolatorMarketHero from "../lib/perchero";
+import PercolatorMarketHero from "../lib/perchero";
 import MCPHero from "../lib/mcp";
 import RHero from "../lib/allreposhero";
 import MHero from "../lib/allmcphero";
+import RobinhoodChainIsland from "../lib/robinhood";
 
-
+const FEATURES = [
+  {
+    n: "01",
+    title: "Immutable code",
+    body: "Once deployed, a version is sealed. Every release is cryptographically fixed, so what you shipped is exactly what runs.",
+  },
+  {
+    n: "02",
+    title: "Decentralized",
+    body: "Your code lives across a distributed network. No single authority can move it, gate it, or take it offline.",
+  },
+  {
+    n: "03",
+    title: "Tamper proof",
+    body: "Each line is verified on read. Any change to a sealed release is rejected before it can reach anyone.",
+  },
+  {
+    n: "04",
+    title: "Package manager",
+    body: "A tamper-proof registry for the next web. Immutable deployments, cryptographically verified, no central gatekeeper.",
+  },
+  {
+    n: "05",
+    title: "MCP registry",
+    body: "A shared registry of MCP servers you can clone in a click and connect straight to your models.",
+  },
+  {
+    n: "06",
+    title: "App builder",
+    body: "Describe an app and get a working Node.js project. Simple apps today, more languages arriving soon.",
+  },
+  {
+    n: "07",
+    title: "Code review",
+    body: "Automated review that watches your supply chain and flags what changed before it lands.",
+  },
+  {
+    n: "08",
+    title: "Takedown resistant",
+    body: "Nothing here can be censored or pulled. It persists across the network for as long as the network exists.",
+  },
+];
 
 export default function Home() {
   const [token, setToken] = useState(null);
@@ -39,338 +81,280 @@ export default function Home() {
 
   useEffect(() => {
     //const tkn = localStorage.getItem("vjwt")
-    if (token==null) {
-      router.replace("/")
-      return
+    if (token == null) {
+      router.replace("/");
+      return;
+    } else if (token != null) {
+      router.replace("/dashboard");
     }
-    else if(token !=null){
+  }, [token]);
 
-      router.replace("/dashboard")
-
-    }}, [token])
-   //[#050505]
-   //[#17171C]
-   //[#010409]
   return (
-    <div className="min-h-screen bg-black text-[#E0E0E0] font-mono selection:bg-white selection:text-black">
-      
-      {/* BRUTALIST OVERLAY */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-10"></div>
+    <div className="zen-root relative min-h-screen overflow-x-hidden text-[#F5F5F7] antialiased selection:bg-white/20 selection:text-white">
+      {/* AMBIENT CANVAS — the "wallpaper" the glass floats over */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[#07080B]" />
+        <div className="bloom bloom-a" />
+        <div className="bloom bloom-b" />
+        <div className="bloom bloom-c" />
+        {/* faint grain veil to keep gradients from banding */}
+        <div className="absolute inset-0 opacity-[0.015] mix-blend-screen bg-[radial-gradient(circle_at_1px_1px,#fff_1px,transparent_0)] [background-size:3px_3px]" />
+      </div>
 
       <Header />
-      
+
       <main className="relative z-10">
-  
-        
-        
         {/* SECTION 1: HERO */}
-        <section className="px-6 py-24 md:py-40 flex flex-col items-center border-b border-white/10">
-          <div className="w-full max-w-7xl">
-            <div className="pt-3">
-              <Hero />
-               <center>
-                 <TypingDiv/>
-              </center>
+        <section className="px-5 sm:px-6 pt-28 pb-20 md:pt-40 md:pb-28 flex flex-col items-center">
+          <div className="w-full max-w-6xl">
+            <Hero />
 
-              <pre className="mt-12 text-xl md:text-2xl uppercase tracking-widest text-white/60" >       Immutable • Decentralized • Tamper-proof • Takedown-resistant</pre> 
-             
-             
+            <div className="mt-2 flex justify-center">
+              <TypingDiv />
+            </div>
 
-              <br/> <center>
-                  
-                  <ContractAddress/>
-   
-               </center>
-             
+            {/* Traits as soft frosted chips instead of a mono banner */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-2.5">
+              {["Immutable", "Decentralized", "Tamper-proof", "Takedown-resistant"].map(
+                (t) => (
+                  <span
+                    key={t}
+                    className="glass-chip text-[11px] sm:text-xs font-medium tracking-wide text-white/70"
+                  >
+                    {t}
+                  </span>
+                )
+              )}
+            </div>
+
+            <div className="mt-10 flex justify-center">
+              <ContractAddress />
             </div>
           </div>
         </section>
 
+        <div>
+        <RobinhoodChainIsland/>
 
-
-
-<div className="relative w-full min-h-screen bg-[#010409] flex flex-col items-center justify-center py-20 px-6 overflow-hidden">
-  
-  {/* 1. BACKGROUND DECOR (Roadmap Style) */}
-  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
-     <h1 className="text-[20vw] font-black text-white/[0.02] absolute top-[-5%] left-1/2 -translate-x-1/2 leading-none">
-        HUB
-     </h1>
-  </div>
-
-  {/* 2. THE STAGE (Adds the soft glow behind the player) */}
-  <div className="relative w-full max-w-6xl">
-    
-    {/* Cinematic Glow */}
-    
-    
-    {/* 3. TOP LEVEL LABELS */}
-    <div className="flex items-end justify-between mb-8 relative z-10">
-      <div className="space-y-1">
-        <div className="flex items-center gap-2">
-          
-          <span className="text-indigo-500 text-[10px] font-bold tracking-[0.4em] uppercase">
-            
-          </span>
         </div>
-        <h2 className="text-3xl font-bold text-white tracking-tighter">System Usage</h2>
-      </div>
-      
-    </div>
 
-    {/* 4. THE PLAYER CONTAINER (With added lift and border) */}
-    <div className="relative z-10 transition-transform duration-700 hover:scale-[1.005]">
-       <VideoPlayer />
-    </div>
+        {/* SYSTEM USAGE — glass-framed player */}
+        <section className="relative px-5 sm:px-6 py-16 md:py-24 flex flex-col items-center">
+          <h1 className="pointer-events-none select-none absolute top-2 left-1/2 -translate-x-1/2 text-[22vw] font-semibold leading-none text-white/[0.015] tracking-tighter">
+            HUB
+          </h1>
 
-    {/* 5. CAPTION / FOOTER DETAIL */}
-    <div className="mt-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-white/5 pt-8 relative z-10">
-      <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-        Experience the next generation of <span className="text-white">immutable architecture</span>. Designed for scale, built for security.
-      </p>
-      
-      <div className="flex items-center gap-8">
-        <div className="flex flex-col">
-          <span className="text-[10px] text-white/20 uppercase font-bold tracking-widest">Protocol</span>
-          <span className="text-indigo-500 text-sm font-bold italic">V1.0.0</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[10px] text-white/20 uppercase font-bold tracking-widest">Region</span>
-          <span className="text-gray-400 text-sm font-bold">Global-Edge</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        {/* SECTION 2: FEATURES */}
-        <section className="border-b border-white/10 py-24 md:py-32">
-          <div className="max-w-7xl mx-auto px-6">
-            {/* Unified Section Title Spacing */}
-            <div className="mb-16">
-                <h2 className="text-[5vw] leading-[0.85] font-black uppercase tracking-tighter text-white/20">
-                    FEATURES
+          <div className="relative w-full max-w-5xl">
+            <div className="mb-6 flex items-end justify-between">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-white/35">
+                  Walkthrough
+                </p>
+                <h2 className="mt-1 text-2xl md:text-3xl font-medium tracking-tight text-white">
+                  See it in motion
                 </h2>
+              </div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-white/10">
-              {/* Feature 01 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">01 Immutable Code</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  Once deployed, your code becomes permanent and unalterable. Every version is cryptographically sealed for complete integrity.
-                </p>
+
+            {/* Frosted frame around the player */}
+            <div className="glass overflow-hidden rounded-[28px] p-1.5 transition-transform duration-700 hover:scale-[1.004]">
+              <div className="overflow-hidden rounded-[22px]">
+                <VideoPlayer />
               </div>
+            </div>
 
-              {/* Feature 02 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">02 Decentralized</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  Your code lives across a distributed network. No central authority can control, modify, or restrict access to your work.
-                </p>
+            <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="max-w-sm text-sm leading-relaxed text-white/45">
+                A calmer way to ship permanent software — built for scale, sealed for
+                trust.
+              </p>
+              <div className="flex items-center gap-7">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-white/25">
+                    Protocol
+                  </span>
+                  <span className="text-sm font-medium text-white/80">v1.0.0</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-white/25">
+                    Region
+                  </span>
+                  <span className="text-sm font-medium text-white/80">Global-Edge</span>
+                </div>
               </div>
-
-              {/* Feature 03 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">03 Tamper Proof</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  Advanced cryptographic validation ensures every line remains exactly as intended. Modifications are instantly rejected.
-                </p>
-              </div>
-
-
-
-              {/* Feature 04 */}
-          
-
-                  <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">04 Immutable Package Manager</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  A resilient, tamper-proof package registry built for the next web. No central authority. Immutable deployments. Cryptographically verified.
-                </p>
-              </div>
-
-
-
-               {/* Feature 05 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">05 MCP Registry</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  A central registry of MCP servers  that can be cloned and used with llms
-                </p>
-              </div>
-
-
-               {/* Feature 06 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">06 App Builder</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  Built-in AI  based Node js App  builder (currently supports simple node js apps)
-                  More language support will be added soon
-                </p>
-              </div>
-
-                  {/* Feature 07 */}
-              <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">07 Code Review</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  PM: The decentralized node package manager and registry that secures your software supply chain
-                </p>
-              </div>
-
-
-
-                   {/* Feature 08 */}
-             
-              
-    <div className="p-12 border-b border-r border-white/10 hover:bg-white/[0.02] transition-all">
-                <h3 className="text-xl font-bold uppercase mb-6 text-white tracking-tighter">08 Takedown Resistant</h3>
-                <p className="text-sm text-white/50 leading-relaxed font-sans">
-                  Your code cannot be censored or removed. It persists indefinitely across the network, providing true permanence.
-                </p>
-              </div>
-
-
-
-
-
-
             </div>
           </div>
         </section>
 
+        {/* SECTION 2: FEATURES — frosted cards, no hard grid */}
+        <section className="px-5 sm:px-6 py-20 md:py-28">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-12 md:mb-16">
+              <p className="text-[11px] font-medium uppercase tracking-[0.35em] text-white/35">
+                What's inside
+              </p>
+              <h2 className="mt-2 text-3xl md:text-4xl font-medium tracking-tight text-white">
+                Everything, sealed and in one place
+              </h2>
+            </div>
 
-      <div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {FEATURES.map((f) => (
+                <div
+                  key={f.n}
+                  className="glass group rounded-3xl p-7 transition-all duration-500 hover:-translate-y-1 hover:bg-white/[0.06]"
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="font-mono text-[11px] tracking-wider text-white/30">
+                      {f.n}
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/20 transition-colors duration-500 group-hover:bg-[#0A84FF]" />
+                  </div>
+                  <h3 className="mb-3 text-lg font-medium tracking-tight text-white">
+                    {f.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-white/45">{f.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-       <MHero/>
-
-      </div>
-        
-
-        <div>
-          <IPMRegistryHero/>
+        {/* PRODUCT HEROES — calm spacing, no hard dividers */}
+        <div className="space-y-4 md:space-y-8">
+          <div><MHero /></div>
+          <div><IPMRegistryHero /></div>
+          <div><MCPHero /></div>
+          <div><ImmutablePromptsHero /></div>
+          <div><CodeReviewHero /></div>
+          <div><ImmutableAgentsHero /></div>
+          <div><AcceleratorHero /></div>
         </div>
-
-
-        <div>
-
-          <MCPHero/>
-        </div>
-
-
-        <div>
-
-          <ImmutablePromptsHero/>
-        </div>
-
-        <div>
-
-          <AppBuilderHero/>
-        </div>
-
-
-        <div>
-
-        <CodeReviewHero/>
-        </div>
-
-
-        <div>
-
-          <ImmutableAgentsHero/>
-        </div>
-
-
-        
-
-    
-
-        <div>
-     <AcceleratorHero/>
-
-        </div>
-
-        
-       
 
         {/* SECTION 3: ROADMAP */}
-        <section className="py-24 md:py-32 border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16"
-            >
-                
-            </div>
+        <section className="px-5 sm:px-6 py-20 md:py-28">
+          <div className="mx-auto max-w-6xl">
             <TimelineRoadmap />
           </div>
         </section>
 
-
-
-         
-
-
-        <section className="py-24 md:py-32 border-b bg-black border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
-                
-            </div>
-            <DocsSection/>
+        {/* DOCS */}
+        <section className="px-5 sm:px-6 py-20 md:py-28">
+          <div className="mx-auto max-w-6xl">
+            <DocsSection />
           </div>
         </section>
 
-         <section className="py-24 md:py-32 border-b bg-black border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-16">
-                
-            </div>
-            <IPMDocsSection/>
+        <section className="px-5 sm:px-6 py-20 md:py-28">
+          <div className="mx-auto max-w-6xl">
+            <IPMDocsSection />
           </div>
         </section>
-         
-         <footer>
-          <Footer/>
-         </footer>
-       
+
+        <footer>
+          <Footer />
+        </footer>
       </main>
 
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&display=swap');
-        
-        body {
-          font-family: 'Space Grotesk', sans-serif;
+        .zen-root {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+            "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+          -webkit-font-smoothing: antialiased;
         }
 
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Frosted glass — the signature surface */
+        .glass {
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(24px) saturate(150%);
+          -webkit-backdrop-filter: blur(24px) saturate(150%);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-chip {
+          padding: 7px 16px;
+          border-radius: 9999px;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(18px) saturate(150%);
+          -webkit-backdrop-filter: blur(18px) saturate(150%);
+          border: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        /* Ambient color blooms — low saturation, heavy blur, slow drift */
+        .bloom {
+          position: absolute;
+          border-radius: 9999px;
+          filter: blur(120px);
+          will-change: transform;
+        }
+        .bloom-a {
+          width: 46vw;
+          height: 46vw;
+          top: -8%;
+          left: -6%;
+          background: radial-gradient(circle, rgba(79, 70, 229, 0.28), transparent 70%);
+          animation: drift-a 26s ease-in-out infinite;
+        }
+        .bloom-b {
+          width: 40vw;
+          height: 40vw;
+          top: 30%;
+          right: -10%;
+          background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 70%);
+          animation: drift-b 32s ease-in-out infinite;
+        }
+        .bloom-c {
+          width: 38vw;
+          height: 38vw;
+          bottom: -12%;
+          left: 25%;
+          background: radial-gradient(circle, rgba(139, 92, 246, 0.16), transparent 70%);
+          animation: drift-c 38s ease-in-out infinite;
+        }
+
+        @keyframes drift-a {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(4%, 5%); }
+        }
+        @keyframes drift-b {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(-5%, -3%); }
+        }
+        @keyframes drift-c {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(3%, -4%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .bloom { animation: none !important; }
+          html { scroll-behavior: auto; }
+        }
+
+        /* Soft, thin scrollbar */
         ::-webkit-scrollbar {
-          width: 4px;
+          width: 6px;
         }
         ::-webkit-scrollbar-track {
-          background: #050505;
+          background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-          background: #333;
+          background: rgba(255, 255, 255, 0.12);
+          border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: #fff;
+          background: rgba(255, 255, 255, 0.25);
+        }
+
+        :focus-visible {
+          outline: 2px solid #0a84ff;
+          outline-offset: 3px;
+          border-radius: 8px;
         }
       `}</style>
     </div>

@@ -1,132 +1,326 @@
 import React from 'react';
-import { Zap, Rocket, CheckCircle2, Cpu, Globe, ArrowRight } from 'lucide-react';
+import { Zap, CheckCircle2, Cpu, ArrowRight } from 'lucide-react';
+
+const FONT =
+  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif';
+const MONO = 'ui-monospace, "SF Mono", Menlo, monospace';
+const BLUE = '#0A84FF';
+const AMBER = '#FFD60A';
+
+const glass = {
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(24px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  boxShadow:
+    '0 8px 40px -12px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(255,255,255,0.08)',
+};
+
+const chip = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '7px 14px',
+  borderRadius: 999,
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(18px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(18px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  fontSize: 11,
+  fontWeight: 500,
+  letterSpacing: '0.02em',
+  color: 'rgba(255,255,255,0.7)',
+};
+
+const RULES = [
+  { label: 'Stage', val: 'Early phase only' },
+  { label: 'Funding', val: 'Zero VC/seed raised' },
+  { label: 'License', val: 'Strictly open source' },
+  { label: 'Domain', val: 'Web3' },
+];
 
 const AcceleratorHero = () => {
   return (
-    <div className="relative min-h-screen bg-black text-white font-mono overflow-hidden">
-      {/* Background Subtle Grid Effect */}
-      <div className="absolute inset-0 opacity-20" 
-           style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', 
-                    backgroundSize: '40px 40px' }}></div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Content: The Pitch */}
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 text-xs tracking-widest uppercase">
-              <Zap size={14} className="text-yellow-500 fill-yellow-500/20" />
-              Invite-Only Protocol
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight uppercase">
-              Micro <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/40">
-                Accelerator.
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden',
+        fontFamily: FONT,
+        color: '#F5F5F7',
+        WebkitFontSmoothing: 'antialiased',
+        // DARK ambient wallpaper — deep, not flat black, so glass can refract it
+        background:
+          'radial-gradient(50vw 50vw at 15% 10%, rgba(79,70,229,0.22), transparent 60%),' +
+          'radial-gradient(45vw 45vw at 90% 80%, rgba(34,211,238,0.14), transparent 60%),' +
+          'radial-gradient(40vw 40vw at 60% 50%, rgba(139,92,246,0.12), transparent 60%),' +
+          '#07080B',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '120px 24px 80px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 48,
+          alignItems: 'center',
+        }}
+      >
+        {/* LEFT */}
+        <div>
+          <span style={chip}>
+            <Zap size={14} style={{ color: AMBER }} fill={AMBER} />
+            Invite-only protocol
+          </span>
+
+          <h1
+            style={{
+              fontSize: 'clamp(44px, 6vw, 76px)',
+              fontWeight: 500,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.03,
+              margin: '28px 0 16px',
+            }}
+          >
+            Micro
+            <br />
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Accelerator</span>
+          </h1>
+
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', maxWidth: 440, marginBottom: 16 }}>
+            Token holders are eligible for early access and priority consideration when
+            the micro-accelerator launches.
+          </p>
+
+          <p
+            style={{
+              maxWidth: 440,
+              fontSize: 15,
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.5)',
+            }}
+          >
+            A 4–6 week high-intensity sprint for independent builders. We don't take
+            equity or control — we provide the platform, you provide the code.
+          </p>
+
+          {/* Rules grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+              gap: 12,
+              marginTop: 28,
+            }}
+          >
+            {RULES.map((rule, i) => (
+              <div
+                key={i}
+                style={{
+                  borderRadius: 16,
+                  padding: '14px 16px',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(18px)',
+                  WebkitBackdropFilter: 'blur(18px)',
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.35)',
+                    marginBottom: 4,
+                  }}
+                >
+                  {rule.label}
+                </p>
+                <p style={{ fontSize: 13, fontWeight: 500, color: 'rgba(255,255,255,0.85)' }}>
+                  {rule.val}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
+            <button
+              style={{
+                border: 'none',
+                cursor: 'not-allowed',
+                background: BLUE,
+                color: '#fff',
+                padding: '14px 28px',
+                borderRadius: 999,
+                font: 'inherit',
+                fontSize: 14,
+                fontWeight: 500,
+                boxShadow: '0 8px 30px -8px rgba(10,132,255,0.65)',
+              }}
+            >
+              Coming soon
+            </button>
+            <a
+              href="/accelerator"
+              style={{
+                textDecoration: 'none',
+                color: 'rgba(255,255,255,0.8)',
+                padding: '14px 28px',
+                borderRadius: 999,
+                background: 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(18px)',
+                WebkitBackdropFilter: 'blur(18px)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                fontSize: 14,
+                fontWeight: 500,
+              }}
+            >
+              Learn more
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT — agreement panel */}
+        <div>
+          <div style={{ ...glass, borderRadius: 26, overflow: 'hidden' }}>
+            {/* header */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '14px 20px',
+                borderBottom: '1px solid rgba(255,255,255,0.07)',
+              }}
+            >
+              <div style={{ display: 'flex', gap: 8 }}>
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 999,
+                      background: 'rgba(255,255,255,0.15)',
+                    }}
+                  />
+                ))}
+              </div>
+              <span
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  fontFamily: MONO,
+                  fontSize: 10,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.3)',
+                }}
+              >
+                <Cpu size={12} /> accelerator_v1.sys
               </span>
-            </h1>
-             <h5>Token holders will be eligible for early access and priority consideration when the micro-accelerator launches</h5>
-            <p className="max-w-md text-gray-400 leading-relaxed border-l-2 border-white/10 pl-6">
-              A 4-6 week high-intensity sprint for independent builders. We don't take equity or control. We provide the platform.you provide the code.
-            </p>
-
-            {/* Submission Rules Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-              {[
-                { label: "Stage", val: "Early Phase Only" },
-                { label: "Funding", val: "Zero VC/Seed Raised" },
-                { label: "License", val: "Strictly Open Source" },
-                { label: "Domain", val: "Web3" }
-              ].map((rule, i) => (
-                <div key={i} className="border border-white/5 bg-white/5 p-3">
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{rule.label}</p>
-                  <p className="text-sm font-bold uppercase">{rule.val}</p>
-                </div>
-              ))}
-            </div>
-            
-
-
-            <div className="flex flex-wrap gap-4 pt-4">
-                
-              <div className="group relative">
-                <div className="absolute -inset-0.5 bg-white opacity-20 blur group-hover:opacity-40 transition duration-1000"></div>
-                <button className="relative bg-white text-black px-8 py-4 font-bold transition-all uppercase text-sm tracking-widest cursor-not-allowed">
-                  Coming Soon
-                </button>
-              </div>
-              
-              <button className="border border-white/20 px-8 py-4 font-bold hover:bg-white/5 transition-all uppercase text-sm tracking-widest">
-                <a href='/accelerator'>Learn More</a>
-              </button>
-
             </div>
 
+            {/* body */}
+            <div style={{ padding: 28 }}>
+              <h3
+                style={{
+                  fontSize: 20,
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'rgba(255,255,255,0.95)',
+                }}
+              >
+                The agreement
+              </h3>
+              <p
+                style={{
+                  fontSize: 12,
+                  color: 'rgba(255,255,255,0.4)',
+                  marginTop: 6,
+                }}
+              >
+                No complex term sheets. No board seats.
+              </p>
 
-
-
-
-
-          </div>
-
-          {/* Right Content: The Protocol Terminal */}
-          <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-transparent blur opacity-30"></div>
-            <div className="relative bg-[#0A0A0A] border border-white/10 rounded-sm overflow-hidden shadow-2xl">
-              
-              {/* Terminal Header */}
-              <div className="bg-[#1A1A1A] px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                </div>
-                <span className="text-[10px] text-gray-500 tracking-[0.2em] uppercase flex items-center gap-2">
-                  <Cpu size={12} /> accelerator_v1.sys
-                </span>
-                  
-              </div>
-              
-              {/* Terminal Body */}
-              <div className="p-8 space-y-6">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold uppercase tracking-tight">The Agreement</h3>
-                  <p className="text-xs text-zinc-500 uppercase leading-relaxed">
-                    No complex term sheets. No board seats.
+              <div
+                style={{
+                  marginTop: 24,
+                  borderRadius: 18,
+                  padding: 22,
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 18,
+                }}
+              >
+                <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
+                  <CheckCircle2 size={18} style={{ color: BLUE, flexShrink: 0 }} />
+                  <p style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.9)' }}>
+                    Coming soon
                   </p>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 p-6 space-y-4">
-                  <div className="flex items-start gap-4">
-                    <CheckCircle2 className="text-white mt-1" size={18} />
-                    <div>
-                      <p className="text-sm font-bold uppercase">COMING SOON</p>
-                     
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between bg-black p-4 border border-white/5">
-                    <span className="text-xs uppercase tracking-widest text-zinc-400">No cost</span>
-                
-                  </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 11,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.5)',
+                    }}
+                  >
+                    No cost
+                  </span>
                 </div>
+              </div>
 
-                <div className="space-y-4">
-                  <h5 className="w-full bg-white text-black py-4 font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 uppercase text-xs tracking-widest">
-                    Invite Only <ArrowRight size={14} />
-                  </h5>
-                  <p className="text-[9px] text-center text-zinc-600 uppercase tracking-[0.2em]">
-                    Subject to codebase review & verification
-                  </p>
+              <div style={{ marginTop: 24 }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 10,
+                    padding: '15px',
+                    borderRadius: 999,
+                    background: BLUE,
+                    color: '#fff',
+                    fontSize: 13,
+                    fontWeight: 500,
+                    boxShadow: '0 8px 30px -8px rgba(10,132,255,0.65)',
+                  }}
+                >
+                  Invite only <ArrowRight size={14} />
                 </div>
-
+                <p
+                  style={{
+                    marginTop: 14,
+                    textAlign: 'center',
+                    fontSize: 10,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.3)',
+                  }}
+                >
+                  Subject to codebase review &amp; verification
+                </p>
               </div>
             </div>
-
-            {/* Floating Decorative Elements */}
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
           </div>
-
         </div>
       </div>
     </div>

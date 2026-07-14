@@ -1,124 +1,276 @@
 import React from 'react';
-import { ShieldCheck, Search, CheckCircle2, AlertCircle,Star} from 'lucide-react';
+import { ShieldCheck, Search, CheckCircle2, AlertCircle, Star } from 'lucide-react';
 
+const FONT =
+  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif';
+const MONO = 'ui-monospace, "SF Mono", Menlo, monospace';
+const BLUE = '#0A84FF';
+const GREEN = '#30D158';
+const RED = '#FF453A';
+const AMBER = '#FFD60A';
 
-const RatingBadge = () => (
-  <div className="flex items-center gap-1.5 rounded-full  px-3 py-1 text-amber-700 font-semibold">
-    <Star size={20} fill="currentColor" />
-    <Star size={20} fill="currentColor" />
-    <Star size={20} fill="currentColor" />
-    <Star size={10} fill="currentColor" />
-    <h2 className='text-5xl'>7</h2>
+const glass = {
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(24px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  boxShadow:
+    '0 8px 40px -12px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(255,255,255,0.08)',
+};
+
+const chip = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '7px 14px',
+  borderRadius: 999,
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(18px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(18px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  fontSize: 11,
+  fontWeight: 500,
+  letterSpacing: '0.02em',
+  color: 'rgba(255,255,255,0.7)',
+};
+
+const codeLine = {
+  display: 'flex',
+  gap: 16,
+  alignItems: 'baseline',
+  fontFamily: MONO,
+  fontSize: 13,
+};
+const lineNo = { width: 18, fontSize: 11, color: 'rgba(255,255,255,0.25)' };
+
+const ScoreBadge = () => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+    <div style={{ display: 'flex', gap: 3, color: AMBER }}>
+      {[0, 1, 2].map((i) => (
+        <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
+      ))}
+      <Star size={16} fill="currentColor" strokeWidth={0} style={{ opacity: 0.4 }} />
+    </div>
+    <span style={{ fontSize: 28, fontWeight: 600, letterSpacing: '-0.02em' }}>
+      7<span style={{ fontSize: 15, color: 'rgba(255,255,255,0.4)' }}>/10</span>
+    </span>
   </div>
 );
 
-
 const CodeReviewHero = () => {
   return (
-    <div className="relative min-h-screen bg-black text-white font-mono overflow-hidden">
-      {/* Background Subtle Grid Effect */}
-      <div className="absolute inset-0 opacity-20" 
-           style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', 
-                    backgroundSize: '40px 40px' }}></div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          
-          {/* Left Content: Text and Identity */}
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 text-xs tracking-widest uppercase">
-              <ShieldCheck size={14} className="text-white" />
-              AI Code Reviewer
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight uppercase">
-              AI Code <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/40">
-                Review
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden',
+        fontFamily: FONT,
+        color: '#F5F5F7',
+        WebkitFontSmoothing: 'antialiased',
+        // DARK ambient wallpaper — deep, not flat black, so glass can refract it
+        background:
+          'radial-gradient(50vw 50vw at 15% 10%, rgba(79,70,229,0.22), transparent 60%),' +
+          'radial-gradient(45vw 45vw at 90% 80%, rgba(34,211,238,0.14), transparent 60%),' +
+          'radial-gradient(40vw 40vw at 60% 50%, rgba(139,92,246,0.12), transparent 60%),' +
+          '#07080B',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '120px 24px 80px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 48,
+          alignItems: 'center',
+        }}
+      >
+        {/* LEFT */}
+        <div>
+          <span style={chip}>
+            <ShieldCheck size={14} style={{ color: BLUE }} />
+            AI code reviewer
+          </span>
+
+          <h1
+            style={{
+              fontSize: 'clamp(44px, 6vw, 76px)',
+              fontWeight: 500,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.03,
+              margin: '28px 0',
+            }}
+          >
+            AI Code
+            <br />
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Review</span>
+          </h1>
+
+          <p
+            style={{
+              maxWidth: 420,
+              fontSize: 15,
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.5)',
+            }}
+          >
+            AI-driven analysis and code scoring for Node.js — improve quality,
+            correctness and security before you ship.
+          </p>
+
+          <div style={{ marginTop: 28 }}>
+            <a
+              href="/codereview"
+              style={{
+                display: 'inline-flex',
+                textDecoration: 'none',
+                background: BLUE,
+                color: '#fff',
+                padding: '14px 32px',
+                borderRadius: 999,
+                fontSize: 14,
+                fontWeight: 500,
+                boxShadow: '0 8px 30px -8px rgba(10,132,255,0.65)',
+              }}
+            >
+              Open
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT — diff / review panel */}
+        <div>
+          <div style={{ ...glass, borderRadius: 26, overflow: 'hidden' }}>
+            {/* header */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '14px 20px',
+                borderBottom: '1px solid rgba(255,255,255,0.07)',
+              }}
+            >
+              <div style={{ display: 'flex', gap: 8 }}>
+                <span style={{ width: 10, height: 10, borderRadius: 999, background: 'rgba(255,69,58,0.5)' }} />
+                <span style={{ width: 10, height: 10, borderRadius: 999, background: 'rgba(255,214,10,0.5)' }} />
+                <span style={{ width: 10, height: 10, borderRadius: 999, background: 'rgba(48,209,88,0.5)' }} />
+              </div>
+              <span
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 10,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.3)',
+                }}
+              >
+                security_audit.diff
               </span>
-            </h1>
-
-            <p className="max-w-md text-gray-400 leading-relaxed border-l-2 border-white/10 pl-6">
-              AI-driven  analysis & code scorer  for Node.js. code
-              improve quality, correctness and security
-            </p>
-
-            <div className="flex flex-wrap gap-4 pt-4">
-              <button className="bg-white text-black px-8 py-4 font-bold hover:bg-gray-200 transition-all uppercase text-sm tracking-widest">
-                <a href="/codereview">
-                      open
-                </a>
-              </button>
             </div>
-          </div>
 
-          {/* Right Content: Visual "Code Diff/Review" Element */}
-          <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-red-500/20 to-green-500/20 blur opacity-30"></div>
-            <div className="relative bg-[#0A0A0A] border border-white/10 rounded-sm overflow-hidden shadow-2xl">
-              {/* Terminal Header */}
-              <div className="bg-[#1A1A1A] px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/40"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/40"></div>
-                </div>
-                <span className="text-[10px] text-gray-500 tracking-[0.2em] uppercase">security_audit.diff</span>
-              </div>
-              
-              {/* Review Body */}
-              <div className="p-6 space-y-2">
-                <div className="flex gap-4 opacity-50">
-                  <span className="text-white/30 text-xs w-4">05</span>
-                  <code className="text-sm">app.onDeploy(() =&gt; {"{"}</code>
-                </div>
-                
-                {/* Error Line */}
-                <div className="flex gap-4 bg-red-500/10 -mx-6 px-6 py-1 border-l-2 border-red-500">
-                  <span className="text-red-500/50 text-xs w-4">06</span>
-                  <code className="text-sm text-red-200">-  const key = "insecure_raw_string";</code>
+            {/* body */}
+            <div style={{ padding: 24 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ ...codeLine, opacity: 0.5 }}>
+                  <span style={lineNo}>05</span>
+                  <code>app.onDeploy(() =&gt; {'{'}</code>
                 </div>
 
-                {/* Fix Line */}
-                <div className="flex gap-4 bg-green-500/10 -mx-6 px-6 py-1 border-l-2 border-green-500">
-                  <span className="text-green-500/50 text-xs w-4">07</span>
-                  <code className="text-sm text-green-200">+  const key = await Vault.getSecure();</code>
+                {/* removed */}
+                <div
+                  style={{
+                    ...codeLine,
+                    margin: '0 -24px',
+                    padding: '4px 24px',
+                    background: 'rgba(255,69,58,0.10)',
+                    borderLeft: `2px solid ${RED}`,
+                  }}
+                >
+                  <span style={{ ...lineNo, color: 'rgba(255,69,58,0.6)' }}>06</span>
+                  <code style={{ color: '#FFB4AE' }}>-  const key = "insecure_raw_string";</code>
                 </div>
 
-                <div className="flex gap-4 opacity-50">
-                  <span className="text-white/30 text-xs w-4">08</span>
-                  <code className="text-sm">{"}"});</code>
+                {/* added */}
+                <div
+                  style={{
+                    ...codeLine,
+                    margin: '0 -24px',
+                    padding: '4px 24px',
+                    background: 'rgba(48,209,88,0.10)',
+                    borderLeft: `2px solid ${GREEN}`,
+                  }}
+                >
+                  <span style={{ ...lineNo, color: 'rgba(48,209,88,0.6)' }}>07</span>
+                  <code style={{ color: '#A7EFC0' }}>+  const key = await Vault.getSecure();</code>
                 </div>
-                
-                {/* AI Insight Box */}
-                <div className="mt-8 p-4 bg-white/5 border border-white/10 space-y-3">
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white">
-                    <Search size={14} className="text-blue-400" />
-                    AI Analysis Result
-                  </div>
-                  <div className="space-y-2">
 
-                    <div className="flex items-center gap-2 text-[11px] text-red-400">
-                      <AlertCircle size={12} />
-                      Critical: Hardcoded credential detected.
-                    </div>
-                    <div className="flex items-center gap-2 text-[11px] text-green-400">
-                      <CheckCircle2 size={12} />
-                      Fixed: Migrated to Decentralized Vault.
-                    </div>
-
-                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white">
-                    
-                    Code Score
-                  </div>
-
-                    <RatingBadge/>
-                  </div>
+                <div style={{ ...codeLine, opacity: 0.5 }}>
+                  <span style={lineNo}>08</span>
+                  <code>{'}'});</code>
                 </div>
               </div>
+
+              {/* AI insight */}
+              <div
+                style={{
+                  marginTop: 24,
+                  borderRadius: 18,
+                  padding: 20,
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    fontSize: 12,
+                    fontWeight: 500,
+                    color: 'rgba(255,255,255,0.8)',
+                    marginBottom: 16,
+                  }}
+                >
+                  <Search size={14} style={{ color: BLUE }} />
+                  AI analysis result
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: RED }}>
+                    <AlertCircle size={13} />
+                    Critical: hardcoded credential detected.
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: GREEN }}>
+                    <CheckCircle2 size={13} />
+                    Fixed: migrated to decentralized vault.
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    marginTop: 18,
+                    paddingTop: 16,
+                    borderTop: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 10,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.35)',
+                      marginBottom: 10,
+                    }}
+                  >
+                    Code score
+                  </div>
+                  <ScoreBadge />
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

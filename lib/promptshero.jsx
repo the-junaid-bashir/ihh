@@ -1,158 +1,340 @@
 import React from 'react';
 import { Package, ShieldCheck, Terminal, GitBranch, ArrowRight } from 'lucide-react';
 
+const FONT =
+  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif';
+const MONO = 'ui-monospace, "SF Mono", Menlo, monospace';
+const BLUE = '#0A84FF';
+
+const glass = {
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(24px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  boxShadow:
+    '0 8px 40px -12px rgba(0,0,0,0.6), inset 0 1px 0 0 rgba(255,255,255,0.08)',
+};
+
+const chip = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '7px 14px',
+  borderRadius: 999,
+  background: 'rgba(255,255,255,0.05)',
+  backdropFilter: 'blur(18px) saturate(160%)',
+  WebkitBackdropFilter: 'blur(18px) saturate(160%)',
+  border: '1px solid rgba(255,255,255,0.10)',
+  fontSize: 11,
+  fontWeight: 500,
+  letterSpacing: '0.02em',
+  color: 'rgba(255,255,255,0.7)',
+};
+
+const FEATURES = [
+  { label: 'Publish', val: 'ipm publish <prompt>' },
+  { label: 'Install', val: 'ipm install <prompt>' },
+  { label: 'Storage', val: 'Decentralized' },
+  { label: 'Versioned', val: 'Fully reproducible' },
+  { label: 'Address', val: 'Content-hashed CID' },
+];
+
 const ImmutablePromptsHero = () => {
   return (
-    <div className="relative min-h-screen bg-black text-white font-mono overflow-hidden">
-
-      {/* Subtle Grid Background */}
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden',
+        fontFamily: FONT,
+        color: '#F5F5F7',
+        WebkitFontSmoothing: 'antialiased',
+        // DARK ambient wallpaper — deep, not flat black, so glass can refract it
+        background:
+          'radial-gradient(50vw 50vw at 15% 10%, rgba(79,70,229,0.22), transparent 60%),' +
+          'radial-gradient(45vw 45vw at 90% 80%, rgba(34,211,238,0.14), transparent 60%),' +
+          'radial-gradient(40vw 40vw at 60% 50%, rgba(139,92,246,0.12), transparent 60%),' +
+          '#07080B',
+      }}
+    >
       <div
-        className="absolute inset-0 opacity-20"
         style={{
-          backgroundImage:
-            "linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '120px 24px 80px',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+          gap: 48,
+          alignItems: 'center',
         }}
-      ></div>
+      >
+        {/* LEFT */}
+        <div>
+          <span style={chip}>
+            <ShieldCheck size={14} style={{ color: BLUE }} />
+            Deterministic protocol
+          </span>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <h1
+            style={{
+              fontSize: 'clamp(44px, 6vw, 76px)',
+              fontWeight: 500,
+              letterSpacing: '-0.03em',
+              lineHeight: 1.03,
+              margin: '28px 0',
+            }}
+          >
+            Immutable
+            <br />
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Prompts</span>
+          </h1>
 
-          {/* Left Side */}
-          <div className="space-y-8">
+          <p
+            style={{
+              maxWidth: 440,
+              fontSize: 15,
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.5)',
+            }}
+          >
+            Prompts stored on a decentralized network — content-addressed via IPM.
+            Versioned, forkable, auditable. Publish once, resolve forever.
+          </p>
 
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 text-xs tracking-widest uppercase">
-              <ShieldCheck size={14} className="text-white" />
-              Deterministic Protocol
-            </div>
+          {/* Feature grid */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+              gap: 12,
+              marginTop: 28,
+            }}
+          >
+            {FEATURES.map((item, i) => (
+              <div
+                key={i}
+                style={{
+                  borderRadius: 16,
+                  padding: '14px 16px',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(18px)',
+                  WebkitBackdropFilter: 'blur(18px)',
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.35)',
+                    marginBottom: 4,
+                  }}
+                >
+                  {item.label}
+                </p>
+                <p
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 500,
+                    color: 'rgba(255,255,255,0.85)',
+                    wordBreak: 'break-word',
+                    fontFamily: item.val.includes('ipm ') ? MONO : FONT,
+                  }}
+                >
+                  {item.val}
+                </p>
+              </div>
+            ))}
+          </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight uppercase">
-              Immutable <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/40">
-                Prompts.
+          <div style={{ marginTop: 28 }}>
+            <span
+              style={{
+                display: 'inline-flex',
+                padding: '14px 28px',
+                borderRadius: 999,
+                background: 'rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(18px)',
+                WebkitBackdropFilter: 'blur(18px)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                fontSize: 14,
+                fontWeight: 500,
+                color: 'rgba(255,255,255,0.8)',
+              }}
+            >
+              Integrated with IPM
+            </span>
+          </div>
+        </div>
+
+        {/* RIGHT — prompt definition panel */}
+        <div>
+          <div style={{ ...glass, borderRadius: 26, overflow: 'hidden' }}>
+            {/* header */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '14px 20px',
+                borderBottom: '1px solid rgba(255,255,255,0.07)',
+              }}
+            >
+              <div style={{ display: 'flex', gap: 8 }}>
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    style={{
+                      width: 10,
+                      height: 10,
+                      borderRadius: 999,
+                      background: 'rgba(255,255,255,0.15)',
+                    }}
+                  />
+                ))}
+              </div>
+              <span
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  fontFamily: MONO,
+                  fontSize: 10,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.3)',
+                }}
+              >
+                <Terminal size={12} /> immutable_prompt.pkg
               </span>
-            </h1>
-
-            <p className="max-w-md text-gray-400 leading-relaxed border-l-2 border-white/10 pl-6">
-              Prompts stored on a decentralized network — content-addressed via IPM.
-              Versioned. Forkable. Auditable.
-              Publish once. Resolve forever.
-            </p>
-
-            {/* Feature Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-              {[
-                { label: "Publish", val: "ipm publish <prompt>" },
-                { label: "Install", val: "ipm install <prompt>" },
-                { label: "Storage", val: "Decentralized" },
-                { label: "Versioned", val: "Fully Reproducible" },
-                { label: "Address", val: "Content-Hashed CID" },
-              ].map((item, i) => (
-                <div key={i} className="border border-white/5 bg-white/5 p-3">
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
-                    {item.label}
-                  </p>
-                  <p className="text-sm font-bold uppercase break-words">
-                    {item.val}
-                  </p>
-                </div>
-              ))}
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="group relative">
-                <div className="absolute -inset-0.5 bg-white opacity-20 blur group-hover:opacity-40 transition duration-1000"></div>
+            {/* body */}
+            <div style={{ padding: 28 }}>
+              <h3
+                style={{
+                  fontSize: 20,
+                  fontWeight: 500,
+                  letterSpacing: '-0.01em',
+                  color: 'rgba(255,255,255,0.95)',
+                }}
+              >
+                Prompt definition
+              </h3>
+              <p
+                style={{
+                  fontSize: 12,
+                  color: 'rgba(255,255,255,0.4)',
+                  marginTop: 6,
+                }}
+              >
+                Pinned to the network. No drift.
+              </p>
+
+              <div
+                style={{
+                  marginTop: 24,
+                  borderRadius: 18,
+                  padding: 22,
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 20,
+                }}
+              >
+                <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                  <Package size={18} style={{ color: BLUE, marginTop: 2, flexShrink: 0 }} />
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.9)' }}>
+                      Packaged via IPM
+                    </p>
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>
+                      Pinned across a decentralized network
+                    </p>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                  <GitBranch size={18} style={{ color: BLUE, marginTop: 2, flexShrink: 0 }} />
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 500, color: 'rgba(255,255,255,0.9)' }}>
+                      Version locked
+                    </p>
+                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>
+                      Same hash. Same prompt.
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    background: 'rgba(0,0,0,0.25)',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 11,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.5)',
+                    }}
+                  >
+                    No drift
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 11,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.5)',
+                    }}
+                  >
+                    No silent edits
+                  </span>
+                </div>
               </div>
 
-              <button className="border border-white/20 px-8 py-4 font-bold hover:bg-white/5 transition-all uppercase text-sm tracking-widest">
-                Integrated with IPM
-              </button>
+              <div style={{ marginTop: 24 }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 10,
+                    padding: '15px',
+                    borderRadius: 999,
+                    background: BLUE,
+                    color: '#fff',
+                    fontSize: 13,
+                    fontWeight: 500,
+                    boxShadow: '0 8px 30px -8px rgba(10,132,255,0.65)',
+                  }}
+                >
+                  Integrated with IPM <ArrowRight size={14} />
+                </div>
+                <p
+                  style={{
+                    marginTop: 14,
+                    textAlign: 'center',
+                    fontSize: 10,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.3)',
+                  }}
+                >
+                  Installable • Auditable • Forkable • Deterministic
+                </p>
+              </div>
             </div>
-
           </div>
-
-          {/* Right Side – Terminal */}
-          <div className="relative">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-white/20 to-transparent blur opacity-30"></div>
-
-            <div className="relative bg-[#0A0A0A] border border-white/10 rounded-sm overflow-hidden shadow-2xl">
-
-              {/* Terminal Header */}
-              <div className="bg-[#1A1A1A] px-4 py-3 border-b border-white/10 flex items-center justify-between">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                  <div className="w-2.5 h-2.5 rounded-full bg-white/10"></div>
-                </div>
-                <span className="text-[10px] text-gray-500 tracking-[0.2em] uppercase flex items-center gap-2">
-                  <Terminal size={12} /> immutable_prompt.pkg
-                </span>
-              </div>
-
-              {/* Terminal Body */}
-              <div className="p-8 space-y-6">
-
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold uppercase tracking-tight">
-                    Prompt Definition
-                  </h3>
-                  <p className="text-xs text-zinc-500 uppercase leading-relaxed">
-                    Pinned to the network. No drift.
-                  </p>
-                </div>
-
-                <div className="bg-white/5 border border-white/10 p-6 space-y-4">
-
-                  <div className="flex items-start gap-4">
-                    <Package className="text-white mt-1" size={18} />
-                    <div>
-                      <p className="text-sm font-bold uppercase">
-                        Packaged via IPM
-                      </p>
-                      <p className="text-xs text-zinc-500">
-                        Pinned across a decentralized network
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <GitBranch className="text-white mt-1" size={18} />
-                    <div>
-                      <p className="text-sm font-bold uppercase">
-                        Version Locked
-                      </p>
-                      <p className="text-xs text-zinc-500">
-                        Same hash. Same prompt.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-black p-4 border border-white/5">
-                    <span className="text-xs uppercase tracking-widest text-zinc-400">
-                      No drift
-                    </span>
-                    <span className="text-xs uppercase tracking-widest text-zinc-400">
-                      No silent edits
-                    </span>
-                  </div>
-
-                </div>
-
-                <div className="space-y-4">
-                  <h5 className="w-full bg-white text-black py-4 font-bold hover:bg-zinc-200 transition-all flex items-center justify-center gap-3 uppercase text-xs tracking-widest">
-                    Integrated With IPM <ArrowRight size={14} />
-                  </h5>
-                  <p className="text-[9px] text-center text-zinc-600 uppercase tracking-[0.2em]">
-                    Installable • Auditable • Forkable • Deterministic
-                  </p>
-                </div>
-
-              </div>
-            </div>
-
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
-          </div>
-
         </div>
       </div>
     </div>

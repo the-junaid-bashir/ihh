@@ -13,7 +13,7 @@ import PromptPage from "../../lib/promptpage";
 import IPMPage from "../../lib/ipm-page";
 import RegistryPackageView from "../../lib/ipm-searchpage";
 import Footer from "../../lib/footer";
-import { Database, Command, CuboidIcon, Settings, Folder, Plus, FileText, HelpCircle, LogOut } from "lucide-react"
+import { Database, Command, CuboidIcon } from "lucide-react"
 import TokenDisplay from "../../lib/tokendisplay";
 
 export const dynamic = "force-dynamic";
@@ -32,7 +32,6 @@ const GithubProDashboard = () => {
     const [decoded, setDecoded] = useState("")
     const [mcpdata, setMCPData] = useState(null)
     const [dtoken, setdToken] = useState("")
-    const [hoveredNav, setHoveredNav] = useState(null)
 
     useEffect(() => {
         const token = localStorage.getItem("vjwt")
@@ -124,136 +123,98 @@ const GithubProDashboard = () => {
     // ---- ZEN / GLASS DESIGN TOKENS ----
     const T = {
         background: '#000000',
-        glassPanel: 'rgba(255,255,255,0.04)',
-        glassPill: 'rgba(255,255,255,0.12)',
-        glassPillHover: 'rgba(255,255,255,0.07)',
-        glassBorder: 'rgba(255,255,255,0.09)',
-        glassBorderStrong: 'rgba(255,255,255,0.18)',
+        sidebarBg: '#000000',
         glass: 'rgba(255,255,255,0.045)',
         glassHover: 'rgba(255,255,255,0.07)',
-        textPrimary: 'rgba(255,255,255,0.95)',
-        textSecondary: 'rgba(255,255,255,0.5)',
-        textTertiary: 'rgba(255,255,255,0.32)',
+        glassBorder: 'rgba(255,255,255,0.09)',
+        glassBorderStrong: 'rgba(255,255,255,0.16)',
+        textPrimary: 'rgba(255,255,255,0.92)',
+        textSecondary: 'rgba(255,255,255,0.55)',
+        textTertiary: 'rgba(255,255,255,0.35)',
         accentBlue: '#0A84FF',
         accentGreen: '#30D158',
         accentOrange: '#FF9F0A',
         accentYellow: '#FFD60A',
-        divider: 'rgba(255,255,255,0.07)',
+        divider: 'rgba(255,255,255,0.06)',
     };
 
     const font = '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif';
 
     const styles = {
         dashboard: {
-            position: 'relative',
+            display: 'flex',
             minHeight: '100vh',
-            width: '100%',
             backgroundColor: T.background,
             fontFamily: font,
-            overflowX: 'hidden',
         },
-        // ---- FLOATING NAV ISLAND (detached, vertically centered, left side) ----
-        navIsland: {
+        sidebar: {
+            width: '260px',
+            backgroundColor: 'rgba(255,255,255,0.02)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            borderRight: `1px solid ${T.divider}`,
+            padding: '28px 0',
             position: 'fixed',
-            left: '24px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 50,
+            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '14px 8px',
-            borderRadius: '32px',
-            background: T.glassPanel,
-            backdropFilter: 'blur(36px) saturate(190%)',
-            WebkitBackdropFilter: 'blur(36px) saturate(190%)',
-            border: `1px solid ${T.glassBorder}`,
-            boxShadow: '0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08)',
+            gap: '32px',
         },
-        navIconBtn: (active) => ({
-            position: 'relative',
-            width: '46px',
-            height: '46px',
+        logoSection: { padding: '0 20px' },
+        logo: {
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '18px',
-            background: active ? T.glassPill : 'transparent',
-            border: active ? '1px solid rgba(255,255,255,0.16)' : '1px solid transparent',
-            boxShadow: active
-                ? 'inset 0 1px 0 rgba(255,255,255,0.18), 0 4px 14px rgba(0,0,0,0.4)'
-                : 'none',
-            color: active ? T.textPrimary : T.textSecondary,
-            cursor: 'pointer',
-            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-        }),
-        navTooltip: {
-            position: 'absolute',
-            left: 'calc(100% + 14px)',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            padding: '6px 12px',
-            borderRadius: '10px',
-            background: 'rgba(20,20,20,0.85)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: `1px solid ${T.glassBorder}`,
-            color: T.textPrimary,
-            fontSize: '12px',
+            gap: '12px',
+            padding: '8px 4px',
+            borderRadius: '14px',
+        },
+        nav: {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px',
+            padding: '0 14px',
+        },
+        navLabel: {
+            fontSize: '11px',
+            fontWeight: 600,
+            color: T.textTertiary,
+            padding: '0 10px 10px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+        },
+        navItem: {
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '10px 12px',
+            fontSize: '14px',
             fontWeight: 500,
-            whiteSpace: 'nowrap',
-            pointerEvents: 'none',
-        },
-        navDivider: {
-            width: '26px',
-            height: '1px',
-            background: T.divider,
-            margin: '6px 0',
-        },
-        logoutIslandBtn: (hovered) => ({
-            width: '46px',
-            height: '46px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '18px',
-            background: hovered ? 'rgba(255,69,58,0.14)' : 'transparent',
-            color: hovered ? '#FF453A' : T.textSecondary,
-            border: '1px solid transparent',
+            color: T.textSecondary,
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderRadius: '12px',
             cursor: 'pointer',
             transition: 'all 0.2s ease',
-        }),
-        // ---- MAIN CONTENT ----
-        mainContent: {
-            marginLeft: '120px',
-            paddingRight: '32px',
-            minHeight: '100vh',
+            textAlign: 'left',
+            width: '100%',
         },
-        // Floating top island bar (like a Dynamic Island header)
-        topIsland: {
-            position: 'sticky',
-            top: '20px',
-            zIndex: 20,
-            margin: '20px 0 32px',
-            padding: '14px 26px',
-            borderRadius: '24px',
-            background: T.glassPanel,
-            backdropFilter: 'blur(36px) saturate(190%)',
-            WebkitBackdropFilter: 'blur(36px) saturate(190%)',
-            border: `1px solid ${T.glassBorder}`,
-            boxShadow: '0 8px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07)',
+        navIcon: { fontSize: '15px', width: '20px', textAlign: 'center', display: 'flex' },
+        mainContent: { marginLeft: '260px', flex: 1, minHeight: '100vh' },
+        topBar: {
+            height: '60px',
+            borderBottom: `1px solid ${T.divider}`,
+            padding: '0 36px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
+            backgroundColor: 'rgba(0,0,0,0.4)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            position: 'sticky',
+            top: 0,
+            zIndex: 10,
         },
-        brandDot: {
-            width: '10px',
-            height: '10px',
-            borderRadius: '50%',
-            background: `linear-gradient(135deg, ${T.accentBlue}, ${T.accentGreen})`,
-        },
-        contentArea: { padding: '0 4px 60px' },
+        contentArea: { padding: '40px 44px' },
         pageHeader: { marginBottom: '36px' },
         breadcrumb: {
             display: 'flex',
@@ -284,10 +245,10 @@ const GithubProDashboard = () => {
         },
         card: {
             backgroundColor: T.glass,
-            backdropFilter: 'blur(28px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             border: `1px solid ${T.glassBorder}`,
-            borderRadius: '22px',
+            borderRadius: '20px',
             padding: '28px',
             transition: 'all 0.25s ease',
         },
@@ -308,7 +269,7 @@ const GithubProDashboard = () => {
             color: T.textPrimary,
             backgroundColor: 'rgba(255,255,255,0.04)',
             border: `1px solid ${T.glassBorder}`,
-            borderRadius: '14px',
+            borderRadius: '12px',
             outline: 'none',
             transition: 'border-color 0.2s ease, background 0.2s ease',
             fontFamily: 'inherit',
@@ -342,30 +303,16 @@ const GithubProDashboard = () => {
             textAlign: 'center',
             padding: '56px 24px',
             backgroundColor: T.glass,
-            backdropFilter: 'blur(28px)',
-            WebkitBackdropFilter: 'blur(28px)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
             border: `1px solid ${T.glassBorder}`,
-            borderRadius: '22px',
+            borderRadius: '20px',
         },
         emptyIcon: { fontSize: '40px', marginBottom: '16px', opacity: 0.4 },
         emptyTitle: { fontSize: '15px', fontWeight: 600, color: T.textPrimary, marginBottom: '6px' },
         emptyDescription: { fontSize: '13px', color: T.textSecondary },
         tabContainer: { maxWidth: '1200px', animation: 'fadeIn 0.3s ease-in-out' },
     };
-
-    const navItems = [
-        { key: 'account', icon: <Settings size={19} />, label: 'Account' },
-        { key: 'repos', icon: <Folder size={19} />, label: 'Repositories' },
-        { key: 'create-repo', icon: <Plus size={19} />, label: 'New Repository' },
-        { key: 'mcpregistry', icon: <Database size={19} />, label: 'MCP Registry' },
-        { key: 'prompts', icon: <Command size={19} />, label: 'Prompts' },
-        { key: 'ipm', icon: <CuboidIcon size={19} />, label: 'Your IPM Packages' },
-        { key: 'ipmreg', icon: <CuboidIcon size={19} />, label: 'IPM Registry' },
-        { key: 'docs', icon: <FileText size={19} />, label: 'Docs' },
-        { key: 'support', icon: <HelpCircle size={19} />, label: 'Support' },
-    ];
-
-    const activeLabel = navItems.find(n => n.key === activeTab)?.label ?? 'Dashboard';
 
     const AccountContent = () => (
         <div style={{ maxWidth: '760px' }}>
@@ -399,7 +346,7 @@ const GithubProDashboard = () => {
                             color: T.textPrimary,
                             background: 'rgba(255,255,255,0.03)',
                             padding: '14px 16px',
-                            borderRadius: '14px',
+                            borderRadius: '12px',
                             border: `1px solid ${T.divider}`,
                             wordBreak: 'break-all',
                         }}>
@@ -410,7 +357,7 @@ const GithubProDashboard = () => {
                     <div style={{
                         marginTop: '20px',
                         padding: '18px 18px',
-                        borderRadius: '16px',
+                        borderRadius: '14px',
                         background: 'rgba(255,255,255,0.03)',
                         border: `1px solid ${T.divider}`,
                     }}>
@@ -489,65 +436,75 @@ const GithubProDashboard = () => {
         </div>
     );
 
+    const navItems = [
+        { key: 'account', icon: '⚙', label: 'Account' },
+        { key: 'repos', icon: '📁', label: 'Repositories' },
+        { key: 'create-repo', icon: '➕', label: 'New Repository' },
+        { key: 'mcpregistry', icon: <Database size={15} />, label: 'MCP Registry' },
+        { key: 'prompts', icon: <Command size={15} />, label: 'Prompts' },
+        { key: 'ipm', icon: <CuboidIcon size={15} />, label: 'Your IPM Packages' },
+        { key: 'ipmreg', icon: <CuboidIcon size={15} />, label: 'IPM Registry' },
+        { key: 'docs', icon: '📄', label: 'Docs' },
+        { key: 'support', icon: '!', label: 'Support' },
+    ];
+
     return (
         <div style={styles.dashboard}>
-
-            {/* ---- FLOATING NAV ISLAND ---- */}
-            <nav style={styles.navIsland}>
-                {navItems.map((item, i) => {
-                    const active = activeTab === item.key;
-                    const hovered = hoveredNav === item.key;
-                    return (
-                        <div key={item.key} style={{ position: 'relative' }}>
-                            <button
-                                style={styles.navIconBtn(active)}
-                                onClick={() => setActiveTab(item.key)}
-                                onMouseEnter={() => setHoveredNav(item.key)}
-                                onMouseLeave={() => setHoveredNav(null)}
-                            >
-                                {item.icon}
-                            </button>
-                            {hovered && (
-                                <div style={styles.navTooltip}>{item.label}</div>
-                            )}
-                        </div>
-                    );
-                })}
-
-                <div style={styles.navDivider} />
-
-                <div style={{ position: 'relative' }}>
-                    <button
-                        onClick={() => logout()}
-                        style={styles.logoutIslandBtn(hoveredNav === 'logout')}
-                        onMouseEnter={() => setHoveredNav('logout')}
-                        onMouseLeave={() => setHoveredNav(null)}
-                    >
-                        <LogOut size={18} />
-                    </button>
-                    {hoveredNav === 'logout' && (
-                        <div style={styles.navTooltip}>Logout</div>
-                    )}
-                </div>
-            </nav>
-
-            {/* ---- MAIN CONTENT ---- */}
-            <main style={styles.mainContent}>
-
-                {/* Floating top island (brand + current section) */}
-                <div style={styles.topIsland}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <span style={styles.brandDot} />
-                        <span style={{ fontSize: '15px', fontWeight: 600, color: T.textPrimary, letterSpacing: '-0.01em' }}>
+            <aside style={styles.sidebar}>
+                <div style={styles.logoSection}>
+                    <div style={styles.logo}>
+                        <h1 style={{ fontSize: '20px', fontWeight: 700, letterSpacing: '-0.02em', color: T.textPrimary, margin: 0 }}>
                             ImmutableHub
-                        </span>
-                        <span style={{ color: T.textTertiary, fontSize: '13px' }}>/</span>
-                        <span style={{ fontSize: '13px', color: T.textSecondary }}>{activeLabel}</span>
-                    </div>
-                    <div style={{ fontSize: '11px', color: T.textTertiary, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                        {decoded ? decoded.slice(0, 6) + '···' + decoded.slice(-4) : ''}
+                        </h1>
                     </div>
                 </div>
+
+                <nav style={styles.nav}>
+                    <div style={styles.navLabel}>Main</div>
+                    {navItems.map(item => (
+                        <button
+                            key={item.key}
+                            style={{
+                                ...styles.navItem,
+                                backgroundColor: activeTab === item.key ? T.glassHover : 'transparent',
+                                color: activeTab === item.key ? T.textPrimary : T.textSecondary,
+                            }}
+                            onClick={() => setActiveTab(item.key)}
+                            onMouseEnter={(e) => { if (activeTab !== item.key) e.currentTarget.style.backgroundColor = T.glass; }}
+                            onMouseLeave={(e) => { if (activeTab !== item.key) e.currentTarget.style.backgroundColor = 'transparent'; }}
+                        >
+                            <span style={styles.navIcon}>{item.icon}</span>
+                            {item.label}
+                        </button>
+                    ))}
+
+                    <div style={{ marginTop: '28px', textAlign: 'center' }}>
+                        <button
+                            onClick={() => logout()}
+                            style={{
+                                padding: '10px 28px',
+                                fontSize: '12px',
+                                fontWeight: 600,
+                                letterSpacing: '0.08em',
+                                textTransform: 'uppercase',
+                                background: 'rgba(255,255,255,0.06)',
+                                color: T.textPrimary,
+                                border: `1px solid ${T.glassBorder}`,
+                                borderRadius: '999px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.12)'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.06)'}
+                        >
+                            Logout
+                        </button>
+                    </div>
+                </nav>
+            </aside>
+
+            <main style={styles.mainContent}>
+                <div style={styles.topBar} />
 
                 <div style={styles.contentArea}>
                     {activeTab === 'account' && <AccountContent />}
