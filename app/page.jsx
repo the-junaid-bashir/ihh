@@ -136,6 +136,8 @@ export default function Home() {
         <div>
         <RobinhoodChainIsland/>
 
+        <AcceleratorHero />
+
         </div>
 
         {/* SYSTEM USAGE — glass-framed player */}
@@ -228,7 +230,7 @@ export default function Home() {
           <div><ImmutablePromptsHero /></div>
           <div><CodeReviewHero /></div>
           <div><ImmutableAgentsHero /></div>
-          <div><AcceleratorHero /></div>
+          
         </div>
 
         {/* SECTION 3: ROADMAP */}
